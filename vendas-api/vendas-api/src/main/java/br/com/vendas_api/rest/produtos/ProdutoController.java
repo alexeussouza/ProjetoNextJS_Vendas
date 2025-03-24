@@ -26,19 +26,12 @@ public class ProdutoController {
 	public ProdutoFormRequest salvar(@RequestBody ProdutoFormRequest produto) {
 		
 		
-		Produto entidadeProduto = new Produto(
-				
-				produto.getNome(),
-				produto.getDescricao(),
-				produto.getPreco(),
-				produto.getSku()
-				);
+		Produto entidadeProduto = produto.toModel();
 		
 		produtosRepository.save(entidadeProduto);
+		// depois de salvar produto recebe id e podemos passar os atributos para o ProdutoFormRequest
 		
-		System.out.println(entidadeProduto);
-		
-		return produto;
+		return ProdutoFormRequest.fromModel(entidadeProduto);
 	
 	}
 	

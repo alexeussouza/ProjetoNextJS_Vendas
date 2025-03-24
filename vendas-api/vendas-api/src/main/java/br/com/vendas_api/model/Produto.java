@@ -1,11 +1,13 @@
 package br.com.vendas_api.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +23,7 @@ public class Produto {
 	private String descricao;
 	private BigDecimal preco;
 	private String sku;
+	private LocalDate data_cadastro;
 	
 	public Long getId() {
 		return id;
@@ -62,10 +65,12 @@ public class Produto {
 		this.sku = sku;
 	}
 	
-	@Override
-	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", preco=" + preco + ", sku=" + sku
-				+ "]";
+	public LocalDate getDataCadastro() {
+		return data_cadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.data_cadastro = dataCadastro;
 	}
 
 	public Produto(String nome, String descricao, BigDecimal preco, String sku) {
@@ -75,5 +80,15 @@ public class Produto {
 		this.preco = preco;
 		this.sku = sku;
 	}
+	
+	@PrePersist
+	public void prePersist() { /* Executa na primeira vez antes de persistir os dados.    */
+		setDataCadastro(LocalDate.now()); // seta a data no momento de salvar o registro
+	}
 
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", preco=" + preco + ", sku=" + sku
+				+ ", data_cadastro=" + data_cadastro + "]";
+	}
 }
