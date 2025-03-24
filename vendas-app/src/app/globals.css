@@ -1,0 +1,14 @@
+@import 'bulma/css/bulma.css';
+
+.border:hover{
+  background-color: darkgrey;
+}
+
+li:hover{
+  background: darkgrey;
+}
+
+.app{
+  width: 1200px;
+  margin: 0 auto;
+}
